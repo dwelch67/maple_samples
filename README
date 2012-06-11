@@ -1,0 +1,50 @@
+
+
+These examples are for the leaf labs maple boards
+
+http://leaflabs.com/devices/
+
+Initial examples are for the maple mini, in the mini directory.
+
+---- mini ----
+
+http://leaflabs.com/docs/hardware/maple-mini.html
+
+To get schematics you need to go here
+
+git clone git://github.com/leaflabs/maplemini.git
+
+The microcontroller is an STM32F103CBT6, you want to go here
+
+http://www.st.com/internet/mcu/product/189782.jsp
+
+And get the reference manual RM0008
+
+http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/REFERENCE_MANUAL/CD00171190.pdf
+
+Start with the blinker01 example and go from there.
+
+My mbed_samples repo has a lot of text written about getting and how
+to use the compilers.  My raspberry pi repo has a build_gcc script
+for building your own gnu based ARM cross compiler toolchain from
+sources.
+
+---- bootloader ----
+
+The maple bootloader is found here
+
+git clone git://github.com/leaflabs/maple-bootloader.git
+
+It supports dfu, I have had success using this version of dfu-util
+
+http://gitorious.org/~tormod/unofficial-clones/dfuse-dfu-util
+
+In this manner:
+
+dfu-util -c 1 -i 0 -a 1 -D myprogram.bin
+
+You have to press the reset button and you give it a second then
+have a few seconds to run dfu-util before it tries to run your
+user application.  Once loaded then press reset again and let it
+run.
+

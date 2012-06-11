@@ -1,0 +1,16 @@
+
+See the top level README for documentation and schematics for this board.
+
+There is one user led on this board on pin PB1.
+
+This example blinks that led, 3 blinks, pause, 3 blinks, pause...No
+timer is used, the code counts to a big number to kill time then
+changes the led state.
+
+If this is your first cortex-m3 I hopefully have better information in
+my mbed_samples repo (also at github) look at the first few blinkers.
+
+This example is in C with some asm to get things started.  Both gcc
+and llvm's clang are used to create various flavors of binaries from
+the same source.  The code is quite trivial but this hopefully creates
+a foundation of how to use these tools for an environment like this.
