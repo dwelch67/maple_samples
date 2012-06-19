@@ -1,0 +1,47 @@
+
+See the top level README for documentation and schematics for this board.
+
+There is one user led on this board on pin PB1.
+
+The Cortex-m3 has its own built in system timer, which is super easy
+to use.  It is a 24 bit timer running at the processor clock.  Which
+was a bit fast, so am using clock/8 and watching for 0x800000 ticks
+it is about 8 seconds.  Basically it is looking like it is an 8MHz clock
+which makes sense, the schematic shows an 8MHz crystal, so I assume
+we are running off of that crystal without any multipliers.
+
+Press the reset button, there are fast blinks then some slow ones
+during the slow ones run this command:
+
+dfu-util -c 1 -i 0 -a 1 -D blinker02.gcc.thumb.bin
+
+And it will load the program into the maple mini.
+
+dfu-util 0.5
+
+(C) 2005-2008 by Weston Schmidt, Harald Welte and OpenMoko Inc.
+(C) 2010-2011 Tormod Volden (DfuSe support)
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+
+dfu-util does currently only support DFU version 1.0
+
+Opening DFU USB device... ID 1eaf:0003
+Run-time device DFU version 0001
+Found DFU: [1eaf:0003] devnum=0, cfg=1, intf=0, alt=1, name="DFU Program FLASH 0x08005000"
+Claiming USB DFU Interface...
+Setting Alternate Setting #1 ...
+Determining device status: state = dfuIDLE, status = 0
+dfuIDLE, continuing
+DFU mode device DFU version 0001
+Device returned transfer size 1024
+No valid DFU suffix signature
+Warning: File has no DFU suffix
+bytes_per_hash=4
+Copying data from PC to DFU device
+Starting download: [#########################################################] finished!
+state(8) = dfuMANIFEST-WAIT-RESET, status(0) = No error condition is present
+Done!
+
+Press reset again and let it run and after some fast then slower blinks
+it goes into our program which changes the led state about every 8
+seconds.
