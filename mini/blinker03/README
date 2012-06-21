@@ -1,0 +1,13 @@
+
+See the top level README for documentation and schematics for this board.
+
+This is derived from prior blinker examples, blinker01 and blinker02,
+refer to those for more information.  This example uses a general purpose
+timer TIM2.
+
+This particular flavor of STM32F103 does not have every peripheral described
+in the datasheet for these STM32F1xx parts.  The datasheet says three
+general purpose timers and one advanced timer.  Through trial and
+error TIM2, TIM3, and TIM4 work, TIM5 does not so that make sense three
+of them work as described in the datasheet.
+

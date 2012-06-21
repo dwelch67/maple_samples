@@ -1,0 +1,54 @@
+
+See the top level README for documentation and schematics for this board.
+
+This is derived from blinker03.  This example changes the SYSCLK from
+the internal 8MHz clock it boots off of to multiplying the external 8MHz
+clock (the external should be much more accurate than the internal)
+by 9 to get 72MHz.
+
+Section 7.2 in the programmers reference manual.  Figure 8 Clock tree
+for the most part paints the picture of what we are doing.  There is
+one confusion but we can get through that.
+
+We are going to take the external oscillator (OSC_OUT/OSC_IN) which is
+8MHz on this board.  We have a choice of as is or divide by two, use
+as-is.  Then PLLSRC selects the PLL source, we will set PLLMUL to be
+a multiply by 9.  SYSCLK will be set to use PLLCLK.  We wont prescale
+the AHB system, leave it to be SYSCLK.  We do have to divide APB1 by
+2 to keep it at or under 36MHz.  We are not using the adc clock, I dont
+thinl the external, etc.  Using other items like that you should set the
+divisors to keep each subsystem at or below its rated speed.  The
+confusion is the APB1 clock register says it is divided from the HCLK,
+but the picture implies that APB1 clock is divided from SYSCLK.  HCLK
+is separated from SYSCLK by an enable, if APB1 clock is derived from
+HCLK then the drawing should show that.
+
+One very important example is the flash.  The flash cannot operate at
+72MHz, it will likely mangle your instructions as the processor reads
+them.  You have to change the FLASH_ACR setting to match the SYSCLK.
+
+You have to know the system before you mess with clocks like this.  This
+particular chip boots up using a bootloader that does some stuff then it
+runs your program.  You can use dfu-util or whatever to interrupt that
+bootloader and load a new program.  If you are on a system that comes
+up and boots your code directly, and your code has a bug that ties the
+input clock to the system to a clock that isnt ready or running, etc
+you are dead.  And you may not be able to get in with jtag or other
+interfaces.  Because of how fast your code gets from reset to a dead
+chip, you may never recover that chip.  If you have a system where you
+can short or unshort a pin to change bootloaders or addresses you can
+have a fall back bootloader to get you out of this mess.  Another
+solution you can do for yourself is the same thing, before you ever start
+messing with the clock, have some code check a gpio pin (input), if
+that gpio pin is set one way then allow the clock init code to run
+if the gpio pin is set the other way then do not.  Make sure you test
+the gpio pin code before you write the first line of clock init code.
+This way you can push a button or short a pin or whatever and prevent
+the clock init, preventing the chip from being turned off and dead.  Yes
+I speak from experience.  (see my mbed_samples mzero directory for
+more on this topic) I have lost microcontroller boards because I
+dove into something too soon and messed up my only way of recovering
+the chip/board.  On that note though, if you are not comfortable with
+harming and or losing a board from time to time you may not want to
+program at this level.  You will lose hardware from time to time.  No
+matter how perfect your code is manuals are always wrong here or there.
