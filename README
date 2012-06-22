@@ -37,14 +37,38 @@ git clone git://github.com/leaflabs/maple-bootloader.git
 
 It supports dfu, I have had success using this version of dfu-util
 
+
+
+//http://gitorious.org/~tormod/unofficial-clones/dfuse-dfu-util (obsolete)
+//http://dfu-util.gnumonks.org/releases/
+//git clone git://git.openezx.org/dfu-util
+//dfu-util -c 1 -i 0 -a 1 -D blinker03.gcc.thumb.bin
+
+
+
+I used to use this one but it has been merged into the main so it is
+obsolete
 http://gitorious.org/~tormod/unofficial-clones/dfuse-dfu-util
 
-In this manner:
+The main page appears to be here
+//http://dfu-util.gnumonks.org/releases/
+
+you can get the source above or with git
+git clone git://git.openezx.org/dfu-util
+
+If you used git then
+./autogen.sh
+
+from the tarball or git then:
+./configure
+make
+make install
+
+To write a program to the board, get ready to run the command below,
+press the reset button, the led will blink fast then slow, when it
+starts to blink slow then run the:
 
 dfu-util -c 1 -i 0 -a 1 -D myprogram.bin
 
-You have to press the reset button and you give it a second then
-have a few seconds to run dfu-util before it tries to run your
-user application.  Once loaded then press reset again and let it
-run.
-
+Once loaded then press the reset button again and after the bootloader
+does its led blinks then your program will run.

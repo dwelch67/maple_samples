@@ -2,8 +2,8 @@
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 
-//http://gitorious.org/~tormod/unofficial-clones/dfuse-dfu-util
-//dfu-util -c 1 -i 0 -a 1 -D blinker02.gcc.thumb.bin
+//http://dfu-util.gnumonks.org/releases/
+//dfu-util -c 1 -i 0 -a 1 -D myprogram.bin
 
 void PUT32 ( unsigned int, unsigned int );
 unsigned int GET32 ( unsigned int );
