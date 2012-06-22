@@ -1,0 +1,15 @@
+
+See the top level README for documentation and schematics for this board.
+
+This demonstrates the use of the IWDG independent watchdog timer.
+
+Looking at the manual a PR divisor value of 3 (divide by 32) and a reload
+value of 0xFFF gives 3276.8 ms which is 3.2768 seconds.
+
+So if we dont do anything after starting the watchdog the chip will reset
+in 3 seconds.
+
+That is what this example does, starts the watchdog timer and does nothing,
+you should see the board reset and go through the stock bootloaders
+blinky light pattern.  Since that takes about a second it should
+reboot every 4 seconds.
