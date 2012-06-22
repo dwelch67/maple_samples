@@ -1,0 +1,23 @@
+
+See the top level README for documentation and schematics for this board.
+
+This is an infrared example as in infrared remote controls for your tv or
+whatever.  I am using this receiver:
+
+http://www.sparkfun.com/products/10266
+
+And some jumper wires like these
+
+http://www.sparkfun.com/products/8430
+
+Use the datasheet for the part to see the pinout.  For the maple looking
+at the top of the board (where you can see the led), with the usb connector
+pointed up, the top left corner is vcc, next pin down is ground and
+two pins after that has a 15 label on it.  I have vcc and ground in the
+obvious places and the pin marked 15 is connected to the output pin of
+the ir receiver.
+
+This example simply demonstrates that it works, and we can receive
+something by checking the high/low status of the input pin then
+turning on or off the led in a tight loop.  When you point a remote
+control at it and press a button the led should blink.
